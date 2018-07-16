@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="android.widget.LinearLayout"
+    >
+
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_gravity="center"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_launcher"
+        />
+
+    <Button
+        android:id="@+id/x_revocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="撤销"
+        />
+
+    <Button
+        android:id="@+id/x_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发音"
+        />
+
+    <Button
+        android:id="@+id/x_negative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="不认识"
+        />
+
+    <Button
+        android:id="@+id/x_positive"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:text="下一个"
+        />
+
+</merge>
