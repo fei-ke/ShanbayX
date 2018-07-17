@@ -2,11 +2,11 @@ package com.fei_ke.shanbayx
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.FrameLayout
 
-class ShortcutsHelper(private val activity: Activity) : View.OnClickListener {
+class ShortcutsHelper(private val activity: Activity) {
     companion object {
         const val MODE_PREVIEW = "预习模式"
         const val MODE_SELF_PERCEIVED = "自评模式"
@@ -19,13 +19,9 @@ class ShortcutsHelper(private val activity: Activity) : View.OnClickListener {
         const val MODE_LISTEN = "听词模式"
     }
 
-    private var curMode: String = ""
-    private var btnRevocation: Button
-    private var btnSound: Button
-    private var btnPositive: Button
-    private var btnNegative: Button
-
-    private val viewCache: HashMap<String, View> by lazy { HashMap<String, View>() }
+    private val soundBinder: Binder
+    private val negativeBinder: Binder
+    private val positiveBinder: Binder
 
     init {
         val contentView: FrameLayout = activity.window.decorView.findViewById(Window.ID_ANDROID_CONTENT)
@@ -34,15 +30,30 @@ class ShortcutsHelper(private val activity: Activity) : View.OnClickListener {
         params.gravity = Gravity.BOTTOM or Gravity.END
         contentView.addView(shortcutsLayout, params)
 
-        btnSound = shortcutsLayout.findViewById(R.id.x_sound)
-        btnPositive = shortcutsLayout.findViewById(R.id.x_positive)
-        btnRevocation = shortcutsLayout.findViewById(R.id.x_revocation)
-        btnNegative = shortcutsLayout.findViewById(R.id.x_negative)
+        val btnSound = shortcutsLayout.findViewById<View>(R.id.x_sound)
+        val btnPositive = shortcutsLayout.findViewById<View>(R.id.x_positive)
+        val btnNegative = shortcutsLayout.findViewById<View>(R.id.x_negative)
 
-        btnSound.setOnClickListener(this)
-        btnPositive.setOnClickListener(this)
-        btnRevocation.setOnClickListener(this)
-        btnNegative.setOnClickListener(this)
+        soundBinder = Binder(activity, btnSound,
+                intArrayOf(
+                        resolveId("btn_word_sound_play"),
+                        resolveId("btn_sound_in_word")
+                ))
+        negativeBinder = Binder(activity, btnNegative,
+                intArrayOf(
+                        resolveId("head_title"),
+                        resolveId("unknown"),
+                        resolveId("control_widget_btn_white_unknown")
+                ))
+        positiveBinder = Binder(activity, btnPositive,
+                intArrayOf(
+                        resolveId("next_button"),
+                        resolveId("button_next_group"),
+                        resolveId("known"),
+                        resolveId("detail"),
+                        resolveId("control_widget_btn_white_known"),
+                        resolveId("control_widget_btn_green")
+                ))
 
         shortcutsLayout.findViewById<View>(R.id.handle).setOnTouchListener(object : View.OnTouchListener {
             private var lastX = 0f
@@ -70,53 +81,17 @@ class ShortcutsHelper(private val activity: Activity) : View.OnClickListener {
     }
 
     fun onModeChanged(mode: String) {
-        curMode = mode
-        when (mode) {
-            MODE_SELF_PERCEIVED, MODE_RECALL -> {
-                btnPositive.text = "认识"
-                btnNegative.text = "不认识"
-            }
-            MODE_SUMMAR -> {
-                btnPositive.text = "下一组"
-                btnNegative.text = "不认识"
-            }
-            MODE_EXPLORE -> {
-                btnPositive.text = "下一个"
-                btnNegative.text = "不认识"
-            }
-            MODE_LISTEN -> {
-                btnPositive.text = "听懂了"
-                btnNegative.text = "没听懂"
-            }
-        }
-    }
+        Log.i("ShortcutsHelper:mode", mode)
 
-    override fun onClick(v: View) {
-        when (v) {
-            btnSound -> {
-                when (curMode) {
-                    MODE_LISTEN -> performOriginalClick(activity, "btn_word_sound_play")
-                    else -> performOriginalClick(activity, "btn_sound_in_word")
-                }
-            }
-            btnRevocation -> performOriginalClick(activity, "head_title")
-            btnNegative -> performOriginalClick(activity, "unknown")
-            btnPositive -> {
-                when (curMode) {
-                    MODE_SELF_PERCEIVED, MODE_LISTEN -> performOriginalClick(activity, "known")
-                    MODE_EXPLORE -> performOriginalClick(activity, "next_button")
-                    MODE_SUMMAR -> performOriginalClick(activity, "button_next_group")
-                }
-            }
-        }
+        activity.window.decorView.postDelayed({
+            soundBinder.tryBind()
+            negativeBinder.tryBind()
+            positiveBinder.tryBind()
+        }, 100)
+
     }
 
 
-    private fun performOriginalClick(activity: Activity, idName: String) {
-        if (viewCache[idName] == null) {
-            val id = activity.resources.getIdentifier(idName, "id", activity.packageName)
-            viewCache[idName] = activity.findViewById<View>(id)
-        }
-        viewCache[idName]?.performClick()
-    }
+    private fun resolveId(idName: String) =
+            activity.resources.getIdentifier(idName, "id", activity.packageName)
 }

@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:parentTag="android.widget.LinearLayout"
     >
 
     <ImageView
         android:id="@+id/handle"
-        android:layout_gravity="center"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:src="@mipmap/ic_launcher"
-        />
-
-    <Button
-        android:id="@+id/x_revocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="撤销"
         />
 
     <Button
