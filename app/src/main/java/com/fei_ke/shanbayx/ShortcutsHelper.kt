@@ -30,7 +30,8 @@ class ShortcutsHelper(private val activity: Activity) {
 
         soundBinder = Binder(btnSound, listOfNotNull(
                 contentView.findViewByIdName("btn_word_sound_play"),
-                contentView.findViewByIdName("view_explore")?.findViewByIdName("btn_sound_in_word")
+                contentView.findViewByIdName("view_explore")?.findViewByIdName("btn_sound_in_word"),
+                contentView.findViewByIdName("view_recognition")?.findViewByIdName("btn_sound_in_word")
         ).toTypedArray())
 
         negativeBinder = Binder(btnNegative, listOfNotNull(

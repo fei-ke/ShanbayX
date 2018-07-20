@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:parentTag="android.widget.LinearLayout"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:clipChildren="false"
+    tools:parentTag="android.widget.FrameLayout"
     >
+
+    <Button
+        android:id="@+id/x_positive"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:background="@drawable/btn_bg"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:layout_height="80dp"
+        android:text="下一个"
+        />
 
     <ImageView
         android:id="@+id/handle"
+        android:background="@drawable/btn_bg"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:src="@mipmap/ic_launcher"
         />
 
     <Button
         android:id="@+id/x_sound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:text="发音"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:background="@drawable/btn_bg"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
         />
 
     <Button
         android:id="@+id/x_negative"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:textColor="@android:color/white"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textSize="13sp"
+        android:foreground="?android:selectableItemBackgroundBorderless"
         android:text="不认识"
         />
 
-    <Button
-        android:id="@+id/x_positive"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:text="下一个"
-        />
 
 </merge>
